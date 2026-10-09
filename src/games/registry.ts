@@ -11,5 +11,7 @@ export const gameRegistry: Partial<Record<GameType, AnyGame>> = {
   quiz: g(() => import('./quiz/Quiz')),
   scramble: g(() => import('./scramble/Scramble')),
   memory: g(() => import('./memory/Memory')),
+  sliding: g(() => import('./sliding/Sliding')),
+  jigsaw: g(() => import('./jigsaw/Jigsaw')),
   // @games
 };

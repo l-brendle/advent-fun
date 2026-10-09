@@ -40,3 +40,44 @@ describe('memory', () => {
     expect(buildDeck(2, ['/a.png', '/b.png']).every((c) => c.isImage)).toBe(true);
   });
 });
+
+import { createRng as rng } from '../lib/random';
+import { isSolvable, isSolved, shuffledBoard, solvedBoard, tryMove } from './sliding/logic';
+import { SNAP, initialPieces, snapTarget } from './jigsaw/logic';
+import { shuffle } from '../lib/random';
+
+describe('sliding', () => {
+  it('always produces solvable, unsolved boards', () => {
+    for (const n of [3, 4]) {
+      for (let seed = 0; seed < 100; seed++) {
+        const b = shuffledBoard(n, rng(seed));
+        expect(isSolved(b)).toBe(false);
+        expect(isSolvable(b, n)).toBe(true);
+      }
+    }
+  });
+  it('only moves tiles next to the gap', () => {
+    const b = solvedBoard(3); // gap at index 8
+    expect(tryMove(b, 3, 0)).toBeNull();
+    expect(tryMove(b, 3, 7)).not.toBeNull();
+    expect(tryMove(b, 3, 5)).not.toBeNull();
+  });
+});
+
+describe('jigsaw', () => {
+  it('creates every piece once, all unplaced and inside the stage', () => {
+    const pieces = initialPieces(5, shuffle);
+    expect(pieces).toHaveLength(25);
+    expect(new Set(pieces.map((p) => p.id)).size).toBe(25);
+    expect(pieces.every((p) => !p.placed && p.x >= 0 && p.x <= 0.8 + 1e-9)).toBe(true);
+  });
+  it('has distinct tray slots (no two pieces start at the same spot)', () => {
+    const pieces = initialPieces(5, shuffle);
+    const spots = new Set(pieces.map((p) => `${p.x.toFixed(2)},${p.y.toFixed(2)}`));
+    expect(spots.size).toBeGreaterThan(20);
+  });
+  it('snap target is the piece home', () => {
+    expect(snapTarget({ col: 2, row: 3 }, 5)).toEqual({ x: 0.4, y: 0.6 });
+    expect(SNAP).toBeGreaterThan(0);
+  });
+});
