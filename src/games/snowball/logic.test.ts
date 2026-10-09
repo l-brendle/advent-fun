@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { ANCHOR, LEVELS, createWorld, fire, houseDown, pullToShot, removeBall, step, trajectory } from './logic';
 
-function shoot(level: 1 | 2 | 3, dx: number, dy: number, steps = 420) {
+function shoot(level: 1 | 2 | 3 | 4, dx: number, dy: number, steps = 420) {
   const w = createWorld(LEVELS[level]);
   for (let i = 0; i < 60; i++) step(w); // let the tower settle
   const { pull, vel } = pullToShot(dx, dy);
@@ -15,7 +15,7 @@ function shoot(level: 1 | 2 | 3, dx: number, dy: number, steps = 420) {
 
 describe('snowball', () => {
   it('towers stand still until hit', () => {
-    for (const lv of [1, 2, 3] as const) {
+    for (const lv of [1, 2, 3, 4] as const) {
       const w = createWorld(LEVELS[lv]);
       const y0 = LEVELS[lv].house.y;
       for (let i = 0; i < 600; i++) step(w);
@@ -24,9 +24,9 @@ describe('snowball', () => {
     }
   });
   it('every level can be won with a single shot', () => {
-    for (const lv of [1, 2, 3] as const) {
+    for (const lv of [1, 2, 3, 4] as const) {
       let wins = 0;
-      for (let dx = -55; dx <= -15; dx += 5) for (let dy = 0; dy <= 55; dy += 5) if (shoot(lv, dx, dy)) wins++;
+      for (let dx = -55; dx <= -10; dx += 3) for (let dy = -10; dy <= 55; dy += 3) if (shoot(lv, dx, dy)) wins++;
       expect(wins, `level ${lv}`).toBeGreaterThan(0);
     }
   });

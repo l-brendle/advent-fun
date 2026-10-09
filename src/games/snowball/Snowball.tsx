@@ -132,7 +132,7 @@ function poly(ctx: CanvasRenderingContext2D, body: Body) {
   ctx.closePath();
 }
 
-const FILL: Record<string, string> = { wood: '#a9702f', ice: '#a8dcf5', stone: '#7b7f8a' };
+const FILL: Record<string, string> = { wood: '#a9702f', ice: '#a8dcf5', stone: '#7b7f8a', heavy: '#3d4048' };
 
 function draw(
   ctx: CanvasRenderingContext2D,

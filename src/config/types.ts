@@ -104,14 +104,14 @@ export interface FlappyDay extends GameBase {
 
 export interface MinigolfDay extends GameBase {
   type: 'minigolf';
-  /** Course 1-3. Default: 1 */
-  level?: 1 | 2 | 3;
+  /** Course 1-5 (4 and 5 have moving blocks). Default: 1 */
+  level?: 1 | 2 | 3 | 4 | 5;
 }
 
 export interface SnowballDay extends GameBase {
   type: 'snowball';
-  /** Tower layout 1-3. Default: 1 */
-  level?: 1 | 2 | 3;
+  /** Tower layout 1-4 (4 is the hardest). Default: 1 */
+  level?: 1 | 2 | 3 | 4;
   /** Snowballs available. Default: 5 */
   shots?: number;
 }

@@ -3,7 +3,7 @@ import type { MinigolfDay } from '../../config/types';
 import { GameCanvas, getCtx, toLogical } from '../../components/GameCanvas';
 import { useGameLoop } from '../../lib/useGameLoop';
 import type { GameProps } from '../GameProps';
-import { BALL_R, H, HOLE_R, LEVELS, MAX_SPEED, W, speedOf, stepBall, type Ball, type Level } from './logic';
+import { BALL_R, H, HOLE_R, LEVELS, MAX_SPEED, W, moverRect, speedOf, stepBall, type Ball, type Level } from './logic';
 
 const MAX_PULL = 110;
 
@@ -14,6 +14,7 @@ export default function Minigolf({ config, strings, onComplete }: GameProps<Mini
   const aim = useRef<{ sx: number; sy: number; cx: number; cy: number } | null>(null);
   const state = useRef<'stopped' | 'moving' | 'sunk'>('stopped');
   const sunkAt = useRef(0);
+  const clock = useRef(0);
   const [strokes, setStrokes] = useState(0);
   const timer = useRef<number>();
   useEffect(() => () => window.clearTimeout(timer.current), []);
@@ -46,8 +47,10 @@ export default function Minigolf({ config, strings, onComplete }: GameProps<Mini
   };
 
   useGameLoop((dt) => {
-    if (state.current === 'moving') {
-      const r = stepBall(ball.current, dt, level);
+    clock.current += dt;
+    if (state.current !== 'sunk') {
+      // also runs while the ball rests, so a moving block can nudge it
+      const r = stepBall(ball.current, dt, level, clock.current - dt);
       if (r === 'sunk') {
         state.current = 'sunk';
         sunkAt.current = performance.now();
@@ -58,7 +61,7 @@ export default function Minigolf({ config, strings, onComplete }: GameProps<Mini
         state.current = r;
       }
     }
-    draw(getCtx(canvas.current!), level, ball.current, aim.current, state.current, sunkAt.current);
+    draw(getCtx(canvas.current!), level, ball.current, aim.current, state.current, sunkAt.current, clock.current);
   });
 
   return (
@@ -93,6 +96,7 @@ function draw(
   aim: { sx: number; sy: number; cx: number; cy: number } | null,
   state: string,
   sunkAt: number,
+  clock: number,
 ) {
   ctx.fillStyle = '#3fae5a';
   ctx.fillRect(0, 0, W, H);
@@ -129,6 +133,29 @@ function draw(
     ctx.fillRect(w.x, w.y, w.w, w.h);
     ctx.fillStyle = '#b97b3d';
     ctx.fillRect(w.x, w.y, w.w, Math.min(5, w.h));
+  }
+
+  for (const m of level.movers ?? []) {
+    const r = moverRect(m, clock);
+    ctx.fillStyle = '#d62839';
+    ctx.fillRect(r.x, r.y, r.w, r.h);
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(r.x, r.y, r.w, r.h);
+    ctx.clip();
+    ctx.fillStyle = '#fff';
+    for (let x = r.x - r.h; x < r.x + r.w; x += 14) {
+      ctx.beginPath();
+      ctx.moveTo(x, r.y + r.h);
+      ctx.lineTo(x + 7, r.y + r.h);
+      ctx.lineTo(x + 7 + r.h, r.y);
+      ctx.lineTo(x + r.h, r.y);
+      ctx.fill();
+    }
+    ctx.restore();
+    ctx.strokeStyle = 'rgba(0,0,0,.35)';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(r.x, r.y, r.w, r.h);
   }
 
   // aim line (opposite of the drag)

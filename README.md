@@ -33,8 +33,8 @@ reference them as `'/images/<file>'`.
 | `maze`     | Drag Santa to the present           | `size` (4–14), `seed`                                |
 | `catch`    | Catch presents, avoid coal          | `targetCount`, `speed`, `coalRatio`                  |
 | `flappy`   | Fly the sleigh past trees & clouds  | `targetScore`, `speed`                               |
-| `minigolf` | Putt the ball into the hole         | `level` (1–3)                                        |
-| `snowball` | Slingshot snowballs at the house    | `level` (1–3), `shots`                               |
+| `minigolf` | Putt the ball into the hole         | `level` (1–5; 4 and 5 have moving blocks)            |
+| `snowball` | Slingshot snowballs at the house    | `level` (1–4, 4 is the hardest), `shots`             |
 
 Every day also accepts `title`, `doorColor` and `doorImage`. Games accept `intro` and
 `celebration: { text, image }` (shown after winning; falls back to `defaultCelebration`).
