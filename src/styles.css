@@ -1,0 +1,92 @@
+:root {
+  --bg1: #7a1f2b;
+  --bg2: #3b0f1a;
+  --cream: #fff7e8;
+  --ink: #3b1f1f;
+  --red: #d62839;
+  --green: #2a9d5c;
+  --gold: #f4c542;
+  --radius: 22px;
+  font-family: 'Baloo 2', system-ui, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background: radial-gradient(circle at 50% 0%, var(--bg1), var(--bg2) 70%) fixed;
+  color: var(--cream);
+}
+button { font: inherit; cursor: pointer; }
+
+.page { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 16px 16px 48px; }
+.header { text-align: center; margin: 12px 0 20px; }
+.header h1 { font-family: 'Mountains of Christmas', cursive; font-size: clamp(2.2rem, 8vw, 3.6rem); margin: 0; color: var(--gold); text-shadow: 0 3px 0 rgba(0,0,0,.25); }
+.header p { margin: 0; opacity: .9; }
+.banner { display: inline-block; margin-top: 10px !important; background: rgba(255,255,255,.15); padding: 4px 14px; border-radius: 999px; }
+
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (min-width: 560px) { .grid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+@media (min-width: 860px) { .grid { grid-template-columns: repeat(6, 1fr); } }
+
+.door {
+  position: relative; aspect-ratio: 1; border: 0; border-radius: var(--radius);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--door) 80%, white), var(--door));
+  color: #fff; box-shadow: 0 6px 0 color-mix(in srgb, var(--door) 60%, black), 0 10px 18px rgba(0,0,0,.35);
+  overflow: hidden; display: grid; place-items: center; padding: 0;
+  animation: pop .5s both; animation-delay: calc(var(--i) * 25ms);
+  transition: transform .15s;
+}
+.door::before { content: ''; position: absolute; inset: 9%; border: 3px dashed rgba(255,255,255,.45); border-radius: calc(var(--radius) - 8px); }
+.door-num { font-family: 'Mountains of Christmas', cursive; font-size: clamp(2rem, 9vw, 3rem); text-shadow: 0 2px 0 rgba(0,0,0,.25); z-index: 1; }
+.door-knob { position: absolute; right: 14%; top: 50%; width: 10%; aspect-ratio: 1; border-radius: 50%; background: var(--gold); box-shadow: 0 2px 0 rgba(0,0,0,.3); }
+.door-lock { position: absolute; left: 8px; bottom: 4px; font-size: 1.1rem; }
+.door-star { position: absolute; right: 8px; top: 4px; font-size: 1.1rem; }
+.door-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.door.locked { filter: saturate(.45) brightness(.8); cursor: not-allowed; }
+.door.unlocked:hover, .door.unlocked:focus-visible { transform: translateY(-3px) rotate(-2deg) scale(1.04); }
+.door.unlocked:active { transform: translateY(4px); box-shadow: 0 2px 0 color-mix(in srgb, var(--door) 60%, black); }
+.door.unlocked:not(.opened) { animation: pop .5s both, wiggle 3s ease-in-out infinite 1s; animation-delay: calc(var(--i) * 25ms), calc(var(--i) * 25ms + 1s); }
+.door.shake { animation: shake .4s; }
+.door:focus-visible { outline: 4px solid var(--gold); outline-offset: 3px; }
+
+@keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes wiggle { 0%, 90%, 100% { transform: none; } 93% { transform: rotate(-3deg); } 96% { transform: rotate(3deg); } }
+@keyframes shake { 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
+
+.toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); background: var(--cream); color: var(--ink); padding: 10px 20px; border-radius: 999px; font-weight: 700; z-index: 50; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+
+.snowfall { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.snowfall span { position: absolute; top: -20px; background: #fff; border-radius: 50%; opacity: .7; animation: fall linear infinite; }
+@keyframes fall { to { transform: translateY(110vh) translateX(30px); } }
+
+.backdrop { position: fixed; inset: 0; z-index: 1000; background: rgba(20,5,10,.75); backdrop-filter: blur(3px); display: grid; place-items: center; padding: 16px; animation: fade .2s; }
+@keyframes fade { from { opacity: 0; } }
+.overlay-card {
+  position: relative; background: var(--cream); color: var(--ink); width: min(560px, 100%); max-height: 100%;
+  overflow: auto; border-radius: 28px; padding: 56px 20px 24px; box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  animation: pop .3s both; outline: none; overscroll-behavior: contain;
+}
+@media (max-width: 560px) { .backdrop { padding: 0; } .overlay-card { width: 100%; height: 100%; border-radius: 0; } }
+.close-btn { position: absolute; top: 10px; right: 10px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--red); color: #fff; font-size: 1.3rem; font-weight: 800; box-shadow: 0 3px 0 rgba(0,0,0,.25); }
+.close-btn:focus-visible { outline: 3px solid var(--gold); }
+
+.content { text-align: center; }
+.content-title { font-family: 'Mountains of Christmas', cursive; font-size: 2rem; margin: 0 0 8px; color: var(--red); }
+.content-text { font-size: 1.3rem; line-height: 1.4; margin: 12px 0; }
+.content-img { max-width: 100%; max-height: 60vh; border-radius: 16px; }
+.intro { margin: 0 0 12px; opacity: .8; }
+
+.celebration { text-align: center; }
+.celebration-emoji { font-size: 4rem; animation: bounce 1s infinite; }
+@keyframes bounce { 50% { transform: translateY(-10px) scale(1.1); } }
+.celebration-text { font-family: 'Mountains of Christmas', cursive; font-size: 2.2rem; color: var(--green); margin: 8px 0 16px; }
+.celebration-img { max-width: 100%; max-height: 40vh; border-radius: 16px; margin-bottom: 16px; }
+
+.btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+.btn { border: 0; border-radius: 999px; padding: 12px 22px; min-height: 48px; font-weight: 700; font-size: 1.05rem; background: #eadfc8; color: var(--ink); box-shadow: 0 4px 0 rgba(0,0,0,.2); }
+.btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,.2); }
+.btn-primary { background: var(--green); color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition: none !important; }
+  .snowfall { display: none; }
+}
