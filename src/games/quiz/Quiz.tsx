@@ -12,6 +12,7 @@ export default function Quiz({ config, lang, strings, onComplete }: GameProps<Qu
   const [picked, setPicked] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [removed, setRemoved] = useState<number[]>([]);
+  const [imageFailed, setImageFailed] = useState(false);
   const timers = useRef<number[]>([]);
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
@@ -48,6 +49,15 @@ export default function Quiz({ config, lang, strings, onComplete }: GameProps<Qu
   return (
     <div className="quiz">
       <div className="quiz-question">{tx(config.question, lang)}</div>
+      {config.image && !imageFailed && (
+        <img
+          className="quiz-image"
+          src={config.image}
+          alt={tx(config.imageAlt, lang)}
+          draggable={false}
+          onError={() => setImageFailed(true)}
+        />
+      )}
       <div className="quiz-answers">
         {config.answers.map((a, i) => {
           // Once revealed, every answer shows its colour; the ones that weren't picked are dimmed.

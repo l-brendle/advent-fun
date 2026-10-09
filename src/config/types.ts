@@ -42,6 +42,10 @@ export type AnswerIndex = 0 | 1 | 2 | 3;
 export interface QuizDay extends GameBase {
   type: 'quiz';
   question: LocalizedText;
+  /** Optional picture shown below the question, e.g. '/images/tree.jpg'. */
+  image?: string;
+  /** Alt text for the picture (screen readers). */
+  imageAlt?: LocalizedText;
   answers: [LocalizedText, LocalizedText, LocalizedText, LocalizedText];
   /** Index (0-3) of the correct answer, or a list of indexes when several answers pass. */
   correct: AnswerIndex | AnswerIndex[];
