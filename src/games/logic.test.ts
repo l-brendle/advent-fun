@@ -81,3 +81,34 @@ describe('jigsaw', () => {
     expect(SNAP).toBeGreaterThan(0);
   });
 });
+
+import { circleHitsRect, generateMaze, moveCircle, reachableCount, wallRects } from './maze/logic';
+
+describe('maze', () => {
+  it('connects every cell', () => {
+    for (const n of [4, 8, 14]) {
+      for (let seed = 0; seed < 20; seed++) {
+        expect(reachableCount(generateMaze(n, createRng(seed)), n)).toBe(n * n);
+      }
+    }
+  });
+  it('is deterministic per seed', () => {
+    expect(generateMaze(8, createRng(5))).toEqual(generateMaze(8, createRng(5)));
+  });
+  it('blocks the circle at a wall and slides along it', () => {
+    const wall = { x: 50, y: 0, w: 4, h: 100 };
+    const p = { x: 20, y: 50 };
+    moveCircle(p, 90, 80, 8, [wall]);
+    expect(p.x).toBeLessThanOrEqual(50 - 8 + 0.5);
+    expect(p.y).toBeCloseTo(80, 0);
+    expect(circleHitsRect(p.x, p.y, 8, wall)).toBe(false);
+  });
+  it('cannot tunnel through a wall with a huge jump', () => {
+    const cells = generateMaze(6, createRng(1));
+    const walls = wallRects(cells, 6, 50, 6);
+    const p = { x: 25, y: 25 };
+    moveCircle(p, 1000, 1000, 10, walls);
+    expect(p.x).toBeLessThan(300);
+    expect(p.y).toBeLessThan(300);
+  });
+});
