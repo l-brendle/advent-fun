@@ -8,7 +8,7 @@
 .quiz-answer.picked { background: #e8a317; color: #222; }
 .quiz-answer.correct { background: var(--green); }
 .quiz-answer.wrong { background: var(--red); }
-.quiz-answer.chosen { border-color: #fff; animation: flash .5s 3; }
+.quiz-answer.chosen { border-color: #fff; animation: flash .5s 3; /* 3 blinks; keep in sync with BLINK_TOTAL_MS in Quiz.tsx */ }
 .quiz-answer.dim { opacity: .5; filter: saturate(.6); }
 .quiz-answer:disabled { cursor: default; }
 .quiz-joker { margin-top: 12px; }

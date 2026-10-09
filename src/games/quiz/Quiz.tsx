@@ -7,6 +7,8 @@ import { correctAnswers } from './logic';
 import './quiz.css';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
+/** Wait for the chosen answer's blink animation (3 × 0.5 s, see quiz.css) before celebrating. */
+const BLINK_TOTAL_MS = 1500;
 
 export default function Quiz({ config, lang, strings, onComplete }: GameProps<QuizDay>) {
   const [picked, setPicked] = useState<number | null>(null);
@@ -26,7 +28,7 @@ export default function Quiz({ config, lang, strings, onComplete }: GameProps<Qu
     timers.current.push(
       window.setTimeout(() => {
         setRevealed(true);
-        if (correct.includes(i)) timers.current.push(window.setTimeout(onComplete, 1100));
+        if (correct.includes(i)) timers.current.push(window.setTimeout(onComplete, BLINK_TOTAL_MS));
       }, 1400),
     );
   };
