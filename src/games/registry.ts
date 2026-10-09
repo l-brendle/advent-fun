@@ -18,5 +18,6 @@ export const gameRegistry: Partial<Record<GameType, AnyGame>> = {
   flappy: g(() => import('./flappy/Flappy')),
   minigolf: g(() => import('./minigolf/Minigolf')),
   snowball: g(() => import('./snowball/Snowball')),
+  melody: g(() => import('./melody/Melody')),
   // @games
 };

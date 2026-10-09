@@ -30,6 +30,8 @@ const strings = {
     strokes: 'Schläge',
     par: 'Par',
     tapToStart: 'Tippen zum Starten',
+    melodyHold: 'Halte gedrückt zum Starten ♪',
+    melodyResult: (pct: number, need: number) => `${pct}% getroffen – du brauchst ${need}%.`,
     gameOver: 'Oh nein!',
     outOfShots: 'Keine Schneebälle mehr!',
     intro: {
@@ -43,6 +45,7 @@ const strings = {
       flappy: 'Tippe, damit der Schlitten fliegt!',
       minigolf: 'Ziehe zurück und lass los, um zu schlagen.',
       snowball: 'Ziehe die Schleuder und triff das Lebkuchenhaus!',
+      melody: 'Halte gedrückt und bewege den Finger auf und ab – triff die Töne der Melodie!',
     },
   },
   en: {
@@ -73,6 +76,8 @@ const strings = {
     strokes: 'Strokes',
     par: 'Par',
     tapToStart: 'Tap to start',
+    melodyHold: 'Press and hold to start ♪',
+    melodyResult: (pct: number, need: number) => `${pct}% hit – you need ${need}%.`,
     gameOver: 'Oh no!',
     outOfShots: 'Out of snowballs!',
     intro: {
@@ -86,6 +91,7 @@ const strings = {
       flappy: 'Tap to make the sleigh fly!',
       minigolf: 'Pull back and release to putt.',
       snowball: 'Pull the slingshot and hit the gingerbread house!',
+      melody: 'Press and hold, then slide up and down – hit the notes of the melody!',
     },
   },
 } satisfies Record<Lang, unknown>;

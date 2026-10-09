@@ -27,7 +27,7 @@ export default defineCalendar({
     3: { type: 'scramble', word: 'LEBKUCHEN', hint: { de: 'Süßes Gebäck', en: 'Sweet treat' } },
     4: { type: 'memory', pairs: 6 },
     5: { type: 'sliding', size: 3 },
-    6: { type: 'text', text: { de: 'Frohen Nikolaus! 🎅 Hast du deine Stiefel geputzt?', en: 'Happy St. Nicholas Day! 🎅 Did you polish your boots?' } },
+    6: { type: 'melody', song: 'jingle-bells' },
     7: { type: 'maze', size: 7 },
     8: { type: 'catch', targetCount: 12 },
     9: { type: 'flappy', targetScore: 8 },

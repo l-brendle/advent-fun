@@ -128,6 +128,16 @@ export interface SnowballDay extends GameBase {
   shots?: number;
 }
 
+export interface MelodyDay extends GameBase {
+  type: 'melody';
+  /** Which carol to play. Default: 'jingle-bells' */
+  song?: 'jingle-bells' | 'silent-night' | 'merry-christmas';
+  /** Share of the melody that must be hit, 0.1-1. Default: 0.6 */
+  threshold?: number;
+  /** Tempo multiplier (below 1 = slower, easier). Default: 1 */
+  tempo?: number;
+}
+
 export type GameDay =
   | QuizDay
   | ScrambleDay
@@ -138,7 +148,8 @@ export type GameDay =
   | CatchDay
   | FlappyDay
   | MinigolfDay
-  | SnowballDay;
+  | SnowballDay
+  | MelodyDay;
 
 export type DayConfig = TextDay | ImageDay | GameDay;
 export type GameType = GameDay['type'];
