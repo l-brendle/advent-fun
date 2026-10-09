@@ -1,0 +1,13 @@
+.quiz-question { background: linear-gradient(#1b2a6b, #0f1745); color: #fff; padding: 18px 16px; border-radius: 16px; border: 3px solid var(--gold); font-weight: 700; font-size: 1.15rem; margin-bottom: 14px; }
+.quiz-answers { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 440px) { .quiz-answers { grid-template-columns: 1fr 1fr; } }
+.quiz-answer { min-height: 56px; padding: 8px 22px; color: #fff; font-weight: 700; font-size: 1.05rem; text-align: left; border: 3px solid #cbd3ff; background: linear-gradient(#1b2a6b, #0f1745);
+  clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%); border-radius: 0; }
+.quiz-answer b { color: var(--gold); margin-right: 4px; }
+.quiz-answer:not(:disabled):hover { background: linear-gradient(#2b3d9a, #1b2a6b); }
+.quiz-answer.picked { background: #e8a317; color: #222; }
+.quiz-answer.correct { background: var(--green); animation: flash .5s 3; }
+.quiz-answer.wrong { background: var(--red); }
+.quiz-answer:disabled { cursor: default; }
+.quiz-joker { margin-top: 12px; }
+@keyframes flash { 50% { filter: brightness(1.5); } }

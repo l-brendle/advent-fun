@@ -1,15 +1,13 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
 import type { GameType } from '../config/types';
-import type { GameProps } from './GameProps';
 
-type AnyGame = LazyExoticComponent<ComponentType<GameProps<never>>>;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type AnyGame = LazyExoticComponent<ComponentType<any>>;
 
-/**
- * Maps a config `type` to its game component (code-split).
- * Games register themselves here as they are implemented.
- */
-export const gameRegistry: Partial<Record<GameType, AnyGame>> = {};
+const g = (loader: () => Promise<{ default: ComponentType<any> }>): AnyGame => lazy(loader);
 
-export function _lazyGame<P>(loader: () => Promise<{ default: ComponentType<P> }>): AnyGame {
-  return lazy(loader as never) as unknown as AnyGame;
-}
+/** Maps a config `type` to its (code-split) game component. */
+export const gameRegistry: Partial<Record<GameType, AnyGame>> = {
+  quiz: g(() => import('./quiz/Quiz')),
+  // @games
+};
