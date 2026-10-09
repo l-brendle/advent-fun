@@ -3,6 +3,7 @@ import type { QuizDay } from '../../config/types';
 import { tx } from '../../i18n/strings';
 import { shuffle } from '../../lib/random';
 import type { GameProps } from '../GameProps';
+import { correctAnswers } from './logic';
 import './quiz.css';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
@@ -14,7 +15,9 @@ export default function Quiz({ config, lang, strings, onComplete }: GameProps<Qu
   const timers = useRef<number[]>([]);
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
-  const jokerAvailable = (config.joker ?? true) && removed.length === 0;
+  const correct = correctAnswers(config.correct);
+  const wrongAnswers = [0, 1, 2, 3].filter((i) => !correct.includes(i));
+  const jokerAvailable = (config.joker ?? true) && removed.length === 0 && wrongAnswers.length > 0;
 
   const pick = (i: number) => {
     if (picked !== null) return;
@@ -22,16 +25,16 @@ export default function Quiz({ config, lang, strings, onComplete }: GameProps<Qu
     timers.current.push(
       window.setTimeout(() => {
         setRevealed(true);
-        if (i === config.correct) timers.current.push(window.setTimeout(onComplete, 1100));
+        if (correct.includes(i)) timers.current.push(window.setTimeout(onComplete, 1100));
       }, 1400),
     );
   };
 
   const joker = useMemo(
     () => () => {
-      const wrong = [0, 1, 2, 3].filter((i) => i !== config.correct);
-      setRemoved(shuffle(wrong).slice(0, 2));
+      setRemoved(shuffle(wrongAnswers).slice(0, 2));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [config.correct],
   );
 
@@ -40,15 +43,22 @@ export default function Quiz({ config, lang, strings, onComplete }: GameProps<Qu
     setRevealed(false);
   };
 
-  const wrong = revealed && picked !== config.correct;
+  const wrong = revealed && picked !== null && !correct.includes(picked);
 
   return (
     <div className="quiz">
       <div className="quiz-question">{tx(config.question, lang)}</div>
       <div className="quiz-answers">
         {config.answers.map((a, i) => {
+          // On a miss, every correct answer is shown; on a hit, just the picked one.
           const state =
-            revealed && i === config.correct ? 'correct' : revealed && i === picked ? 'wrong' : picked === i ? 'picked' : '';
+            revealed && correct.includes(i) && (wrong || i === picked)
+              ? 'correct'
+              : revealed && i === picked
+                ? 'wrong'
+                : picked === i
+                  ? 'picked'
+                  : '';
           return (
             <button
               key={i}

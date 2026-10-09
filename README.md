@@ -25,7 +25,7 @@ reference them as `'/images/<file>'`.
 |------------|-------------------------------------|------------------------------------------------------|
 | `text`     | A message                           | `text`                                               |
 | `image`    | A picture with optional caption     | `image`, `caption`, `alt`                            |
-| `quiz`     | "Who wants to be a millionaire?"    | `question`, `answers` (4), `correct` (0–3), `joker`  |
+| `quiz`     | "Who wants to be a millionaire?"    | `question`, `answers` (4), `correct` (0–3 or a list like `[0, 2]`), `joker` |
 | `scramble` | Unscramble a word                   | `word`, `hint`                                       |
 | `memory`   | Find the pairs                      | `pairs` (4–10), `images`                             |
 | `sliding`  | Sliding tile puzzle                 | `size` (3/4), `image`                                |

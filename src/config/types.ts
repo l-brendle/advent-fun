@@ -37,12 +37,14 @@ export interface ImageDay extends DayBase {
   alt?: LocalizedText;
 }
 
+export type AnswerIndex = 0 | 1 | 2 | 3;
+
 export interface QuizDay extends GameBase {
   type: 'quiz';
   question: LocalizedText;
   answers: [LocalizedText, LocalizedText, LocalizedText, LocalizedText];
-  /** Index (0-3) of the correct answer. */
-  correct: 0 | 1 | 2 | 3;
+  /** Index (0-3) of the correct answer, or a list of indexes when several answers pass. */
+  correct: AnswerIndex | AnswerIndex[];
   /** Show a 50:50 joker button. Default: true */
   joker?: boolean;
 }
