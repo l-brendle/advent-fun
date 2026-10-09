@@ -50,15 +50,12 @@ export default function Quiz({ config, lang, strings, onComplete }: GameProps<Qu
       <div className="quiz-question">{tx(config.question, lang)}</div>
       <div className="quiz-answers">
         {config.answers.map((a, i) => {
-          // On a miss, every correct answer is shown; on a hit, just the picked one.
-          const state =
-            revealed && correct.includes(i) && (wrong || i === picked)
-              ? 'correct'
-              : revealed && i === picked
-                ? 'wrong'
-                : picked === i
-                  ? 'picked'
-                  : '';
+          // Once revealed, every answer shows its colour; the ones that weren't picked are dimmed.
+          const state = revealed
+            ? `${correct.includes(i) ? 'correct' : 'wrong'} ${i === picked ? 'chosen' : 'dim'}`
+            : picked === i
+              ? 'picked'
+              : '';
           return (
             <button
               key={i}
