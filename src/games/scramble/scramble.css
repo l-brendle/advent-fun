@@ -1,0 +1,11 @@
+.scramble { text-align: center; }
+.scramble-hint { font-weight: 700; margin: 0 0 14px; }
+.scramble-slots, .scramble-pool { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 14px; }
+.scramble-gap { width: 16px; }
+.tile { width: 42px; height: 50px; border-radius: 10px; border: 0; background: var(--gold); color: var(--ink); font-weight: 800; font-size: 1.5rem; box-shadow: 0 4px 0 rgba(0,0,0,.25); padding: 0; }
+.tile:disabled { opacity: .25; box-shadow: none; }
+.tile.slot { background: #fff; border: 3px dashed #cdb98f; box-shadow: none; }
+.tile.slot:not(:empty) { background: #fff; border-style: solid; border-color: var(--gold); }
+.tile.slot.locked { background: #e6f4ea; border-color: var(--green); }
+.tile.slot.ok { background: var(--green); border-color: var(--green); color: #fff; }
+.shake-row { animation: shake .4s; }

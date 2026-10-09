@@ -9,5 +9,7 @@ const g = (loader: () => Promise<{ default: ComponentType<any> }>): AnyGame => l
 /** Maps a config `type` to its (code-split) game component. */
 export const gameRegistry: Partial<Record<GameType, AnyGame>> = {
   quiz: g(() => import('./quiz/Quiz')),
+  scramble: g(() => import('./scramble/Scramble')),
+  memory: g(() => import('./memory/Memory')),
   // @games
 };
