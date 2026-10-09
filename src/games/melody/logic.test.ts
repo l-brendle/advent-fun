@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SONG_IDS, buildTrack, hitTime, noteAt, scaleBetween, stepFromY } from './logic';
+import { SONG_IDS, buildTrack, hitTime, midiAtPos, noteAt, posFromY, scaleBetween, stepFromY } from './logic';
 
 describe('melody', () => {
   it('builds sensible tracks for every song', () => {
@@ -27,6 +27,16 @@ describe('melody', () => {
     expect(hit).toBeCloseTo(t.noteTime, 6);
     expect(hitTime(t, 0, t.length, 0)).toBe(0);
     expect(hitTime(t, 0, t.length, null)).toBe(0);
+  });
+  it('pitch glides continuously between scale steps', () => {
+    const scale = [60, 62, 64];
+    expect(midiAtPos(scale, 0)).toBe(60);
+    expect(midiAtPos(scale, 0.5)).toBe(61);
+    expect(midiAtPos(scale, 1.5)).toBe(63);
+    expect(midiAtPos(scale, 2)).toBe(64);
+    expect(posFromY(0, 100, 5)).toBe(4);
+    expect(posFromY(100, 100, 5)).toBe(0);
+    expect(posFromY(50, 100, 5)).toBeCloseTo(2, 6);
   });
   it('finds the active note', () => {
     const t = buildTrack('silent-night');

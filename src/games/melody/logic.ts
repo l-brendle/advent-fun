@@ -91,6 +91,18 @@ export function stepFromY(y: number, h: number, steps: number): number {
   return Math.min(steps - 1, Math.max(0, steps - 1 - band));
 }
 
+/** Continuous position on the scale (0 = lowest step centre, steps-1 = highest) for a vertical position. */
+export function posFromY(y: number, h: number, steps: number): number {
+  return Math.min(steps - 1, Math.max(0, (1 - y / h) * steps - 0.5));
+}
+
+/** Fractional MIDI pitch at a continuous scale position (glides between the steps, not snapped). */
+export function midiAtPos(scale: number[], pos: number): number {
+  const lo = Math.min(scale.length - 1, Math.max(0, Math.floor(pos)));
+  const hi = Math.min(scale.length - 1, lo + 1);
+  return scale[lo] + (scale[hi] - scale[lo]) * (pos - lo);
+}
+
 export function noteAt(track: Track, t: number): TrackNote | undefined {
   return track.notes.find((n) => t >= n.start && t < n.start + n.dur);
 }

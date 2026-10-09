@@ -4,7 +4,7 @@ import { GameCanvas, getCtx, toLogical } from '../../components/GameCanvas';
 import { GameMessage } from '../../components/GameMessage';
 import { useGameLoop } from '../../lib/useGameLoop';
 import type { GameProps } from '../GameProps';
-import { buildTrack, hitTime, midiToFreq, stepFromY, type Track } from './logic';
+import { buildTrack, hitTime, midiAtPos, midiToFreq, posFromY, stepFromY, type Track } from './logic';
 
 type Phase = 'ready' | 'waiting' | 'playing' | 'lost' | 'won';
 
@@ -55,7 +55,7 @@ export default function Melody({ config, strings, onComplete }: GameProps<Melody
   const track = useRef<Track>(buildTrack(config.song ?? 'jingle-bells', config.tempo ?? 1));
   const canvas = useRef<HTMLCanvasElement>(null);
   const synth = useRef<ReturnType<typeof createSynth>>(null);
-  const game = useRef({ t: -LEAD_IN, hit: 0, held: false, step: 0 });
+  const game = useRef({ t: -LEAD_IN, hit: 0, held: false, step: 0, pos: 0 });
   const [phase, setPhase] = useState<Phase>('ready');
   const [pct, setPct] = useState(0);
   const phaseRef = useRef<Phase>('ready');
@@ -71,15 +71,19 @@ export default function Melody({ config, strings, onComplete }: GameProps<Melody
   );
 
   const reset = () => {
-    game.current = { t: -LEAD_IN, hit: 0, held: false, step: 0 };
+    game.current = { t: -LEAD_IN, hit: 0, held: false, step: 0, pos: 0 };
     setPct(0);
     setPhase('waiting');
   };
 
   const pitch = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const g = game.current;
-    g.step = stepFromY(toLogical(e, canvas.current!, W, H).y, H, track.current.scale.length);
-    if (g.held) synth.current?.on(midiToFreq(track.current.scale[g.step]));
+    const y = toLogical(e, canvas.current!, W, H).y;
+    const n = track.current.scale.length;
+    g.step = stepFromY(y, H, n);
+    g.pos = posFromY(y, H, n);
+    // the sound follows the finger continuously (not snapped to the scale); only the hit check uses the nearest step
+    if (g.held) synth.current?.on(midiToFreq(midiAtPos(track.current.scale, g.pos)));
   };
 
   const down = (e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -154,7 +158,7 @@ export default function Melody({ config, strings, onComplete }: GameProps<Melody
 function draw(
   ctx: CanvasRenderingContext2D,
   tr: Track,
-  g: { t: number; held: boolean; step: number },
+  g: { t: number; held: boolean; step: number; pos: number },
   waiting: boolean,
   hint: string,
 ) {
@@ -195,7 +199,7 @@ function draw(
   if (g.held) {
     ctx.fillStyle = active && active.step === g.step ? '#7dff9a' : '#fff';
     ctx.beginPath();
-    ctx.arc(NOW_X, centerY(g.step), 11, 0, Math.PI * 2);
+    ctx.arc(NOW_X, centerY(g.pos), 11, 0, Math.PI * 2);
     ctx.fill();
   }
 
