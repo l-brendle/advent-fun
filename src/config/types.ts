@@ -1,7 +1,7 @@
 export type Lang = 'de' | 'en';
 
-/** A plain string, or one string per language. */
-export type LocalizedText = string | { de: string; en: string };
+/** A plain string, or one string per language (a single language is enough; the other falls back to it). */
+export type LocalizedText = string | { de: string; en?: string } | { de?: string; en: string };
 
 export interface Celebration {
   text?: LocalizedText;

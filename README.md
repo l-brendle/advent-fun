@@ -18,7 +18,7 @@ Everything lives in **`src/config/calendar.config.ts`** — language, title, yea
 celebration screen and the content of each day (1–24). The file is typed, so your editor
 autocompletes the options and `npm run build` fails on mistakes.
 
-Texts can be a plain string or `{ de: '…', en: '…' }`. Put images in `public/images/` and
+Texts can be a plain string or `{ de: '…', en: '…' }` (one language is enough — it is used for both). Put images in `public/images/` and
 reference them as `'/images/<file>'`.
 
 | `type`     | What it is                          | Options                                              |

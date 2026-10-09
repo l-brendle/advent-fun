@@ -104,5 +104,7 @@ export function resolveLang(setting: Lang | 'auto'): Lang {
 
 export function tx(text: LocalizedText | undefined, lang: Lang): string {
   if (text === undefined) return '';
-  return typeof text === 'string' ? text : text[lang];
+  if (typeof text === 'string') return text;
+  const other: Lang = lang === 'de' ? 'en' : 'de';
+  return text[lang] ?? text[other] ?? '';
 }
