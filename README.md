@@ -23,7 +23,7 @@ reference them as `'/images/<file>'`.
 
 | `type`     | What it is                          | Options                                              |
 |------------|-------------------------------------|------------------------------------------------------|
-| `text`     | A message                           | `text`                                               |
+| `text`     | A message, optionally with a picture | `text`, `image`, `imageAlt`, `imagePosition` (`'above'`/`'below'`) |
 | `image`    | A picture with optional caption     | `image`, `caption`, `alt`                            |
 | `quiz`     | "Who wants to be a millionaire?"    | `question`, `image`, `answers` (4), `correct` (0–3 or a list like `[0, 2]`), `joker` |
 | `scramble` | Unscramble a word                   | `word`, `hint`                                       |

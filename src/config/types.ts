@@ -28,6 +28,12 @@ interface GameBase extends DayBase {
 export interface TextDay extends DayBase {
   type: 'text';
   text: LocalizedText;
+  /** Optional picture shown with the text, e.g. '/images/us.jpg'. */
+  image?: string;
+  /** Alt text for the picture (screen readers). */
+  imageAlt?: LocalizedText;
+  /** Where the picture goes relative to the text. Default: 'below' */
+  imagePosition?: 'above' | 'below';
 }
 
 export interface ImageDay extends DayBase {

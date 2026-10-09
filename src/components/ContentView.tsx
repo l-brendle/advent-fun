@@ -4,6 +4,7 @@ import { isGameDay } from '../config/types';
 import { tx, type Strings } from '../i18n/strings';
 import { gameRegistry } from '../games/registry';
 import { Celebration } from './Celebration';
+import { DayImage } from './DayImage';
 
 interface Props {
   day: DayConfig | undefined;
@@ -23,10 +24,13 @@ export function ContentView({ day, calendar, lang, strings, onCompleted, onClose
   const heading = day.title ? <h2 className="content-title">{tx(day.title, lang)}</h2> : null;
 
   if (day.type === 'text') {
+    const picture = day.image ? <DayImage src={day.image} alt={tx(day.imageAlt, lang)} /> : null;
     return (
       <div className="content">
         {heading}
+        {day.imagePosition === 'above' && picture}
         <p className="content-text">{tx(day.text, lang)}</p>
+        {day.imagePosition !== 'above' && picture}
       </div>
     );
   }
@@ -35,7 +39,7 @@ export function ContentView({ day, calendar, lang, strings, onCompleted, onClose
     return (
       <div className="content">
         {heading}
-        <img className="content-img" src={day.image} alt={tx(day.alt ?? day.caption, lang)} />
+        <DayImage src={day.image} alt={tx(day.alt ?? day.caption, lang)} />
         {day.caption && <p className="content-text">{tx(day.caption, lang)}</p>}
       </div>
     );
