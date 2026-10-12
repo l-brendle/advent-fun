@@ -76,7 +76,7 @@ export default function Contraption({ config, strings, onComplete }: GameProps<C
     if (!d) return;
     const p = toLogical(e, canvas.current!, W, H);
     if (Math.hypot(p.x - d.sx, p.y - d.sy) > 5) d.moved = true;
-    if (d.moved) items.current[d.index] = clampItem(items.current[d.index], p.x + d.dx, p.y + d.dy);
+    if (d.moved) items.current[d.index] = clampItem(items.current[d.index], p.x + d.dx, p.y + d.dy, level.minY);
   };
   const up = () => {
     const d = drag.current;

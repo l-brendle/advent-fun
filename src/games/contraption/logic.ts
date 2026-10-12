@@ -33,6 +33,8 @@ export interface LevelDef {
   treeX: number;
   fixed: Rect[];
   items: Item[];
+  /** Highest y parts may be placed at (keeps belts from bridging over low walls). Default 24. */
+  minY?: number;
 }
 
 const item = (kind: ItemKind, x: number, y: number, dir: 1 | -1 = 1, vertical = true): Item => ({ kind, x, y, dir, vertical });
@@ -71,8 +73,8 @@ export function hitItem(it: Item, px: number, py: number, pad = 12): boolean {
   return Math.abs(lx) <= r.w / 2 + pad && Math.abs(ly) <= r.h / 2 + pad;
 }
 
-export function clampItem(it: Item, x: number, y: number): Item {
-  return { ...it, x: Math.min(W - 24, Math.max(24, x)), y: Math.min(FLOOR - 8, Math.max(24, y)) };
+export function clampItem(it: Item, x: number, y: number, minY = 24): Item {
+  return { ...it, x: Math.min(W - 24, Math.max(24, x)), y: Math.min(FLOOR - 8, Math.max(minY, y)) };
 }
 
 const FIXED_FLOOR: Rect[] = [
@@ -106,15 +108,16 @@ export const LEVELS: Record<LevelId, LevelDef> = {
     items: [item('slide', 250, 400), item('trampoline', 300, 330), item('belt', 80, 300), item('wall', 40, 150)],
   },
   // Levels 4+5 are built from decks with a gap at one end: each deck needs its own part to get across,
-  // and the tall block on the first deck can only be cleared with a trampoline hop.
+  // and the low wall on the first deck can only be cleared with a trampoline hop (parts can't be placed high enough to bridge it).
   4: {
     start: { x: 40, y: 40 },
     treeX: 265,
     fixed: [
       { x: 125, y: 130, w: 250, h: 12 },
-      { x: 150, y: 59, w: 14, h: 130 },
+      { x: 150, y: 100, w: 14, h: 48 },
       { x: 235, y: 240, w: 250, h: 12 },
     ],
+    minY: 95,
     items: [item('belt', 300, 420), item('belt', 60, 300), item('slide', 280, 330), item('trampoline', 180, 420)],
   },
   5: {
@@ -122,10 +125,11 @@ export const LEVELS: Record<LevelId, LevelDef> = {
     treeX: 170,
     fixed: [
       { x: 125, y: 100, w: 250, h: 12 },
-      { x: 165, y: 44, w: 14, h: 100 },
+      { x: 165, y: 75, w: 14, h: 38 },
       { x: 235, y: 200, w: 250, h: 12 },
       { x: 125, y: 330, w: 250, h: 12 },
     ],
+    minY: 70,
     items: [item('belt', 300, 420), item('belt', 60, 300), item('slide', 280, 330), item('slide', 90, 420), item('trampoline', 180, 420)],
   },
 };
