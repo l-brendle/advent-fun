@@ -32,6 +32,12 @@ const strings = {
     tapToStart: 'Tippen zum Starten',
     melodyHold: 'Halte gedrückt zum Starten ♪',
     melodyResult: (pct: number, need: number) => `${pct}% getroffen – du brauchst ${need}%.`,
+    stackFell: 'Der Turm ist umgefallen!',
+    contraptionStart: '▶ Los!',
+    contraptionStop: '■ Stopp',
+    contraptionReset: '↺ Zurücksetzen',
+    contraptionHelp: 'Ziehen = verschieben · Tippen = drehen',
+    contraptionMiss: 'Das Geschenk ist nicht angekommen.',
     gameOver: 'Oh nein!',
     outOfShots: 'Keine Schneebälle mehr!',
     intro: {
@@ -46,6 +52,8 @@ const strings = {
       minigolf: 'Ziehe zurück und lass los, um zu schlagen.',
       snowball: 'Ziehe die Schleuder und triff das Lebkuchenhaus!',
       melody: 'Halte gedrückt und bewege den Finger auf und ab – triff die Töne der Melodie!',
+      stack: 'Tippe, um das Geschenk fallen zu lassen – stapel sie zu einem hohen Turm!',
+      contraption: 'Schiebe die Bauteile so, dass das Geschenk unter dem Tannenbaum landet!',
     },
   },
   en: {
@@ -78,6 +86,12 @@ const strings = {
     tapToStart: 'Tap to start',
     melodyHold: 'Press and hold to start ♪',
     melodyResult: (pct: number, need: number) => `${pct}% hit – you need ${need}%.`,
+    stackFell: 'The tower fell down!',
+    contraptionStart: '▶ Go!',
+    contraptionStop: '■ Stop',
+    contraptionReset: '↺ Reset',
+    contraptionHelp: 'Drag = move · Tap = rotate',
+    contraptionMiss: "The present didn't make it.",
     gameOver: 'Oh no!',
     outOfShots: 'Out of snowballs!',
     intro: {
@@ -92,6 +106,8 @@ const strings = {
       minigolf: 'Pull back and release to putt.',
       snowball: 'Pull the slingshot and hit the gingerbread house!',
       melody: 'Press and hold, then slide up and down – hit the notes of the melody!',
+      stack: 'Tap to drop the present – stack them into a tall tower!',
+      contraption: 'Move the parts so the present ends up under the Christmas tree!',
     },
   },
 } satisfies Record<Lang, unknown>;

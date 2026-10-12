@@ -138,6 +138,20 @@ export interface MelodyDay extends GameBase {
   tempo?: number;
 }
 
+export interface StackDay extends GameBase {
+  type: 'stack';
+  /** Presents to stack. Default: 8 */
+  height?: number;
+  /** Swing speed multiplier. Default: 1 */
+  speed?: number;
+}
+
+export interface ContraptionDay extends GameBase {
+  type: 'contraption';
+  /** Puzzle 1-3 (3 is the hardest). Default: 1 */
+  level?: 1 | 2 | 3;
+}
+
 export type GameDay =
   | QuizDay
   | ScrambleDay
@@ -149,7 +163,9 @@ export type GameDay =
   | FlappyDay
   | MinigolfDay
   | SnowballDay
-  | MelodyDay;
+  | MelodyDay
+  | StackDay
+  | ContraptionDay;
 
 export type DayConfig = TextDay | ImageDay | GameDay;
 export type GameType = GameDay['type'];
