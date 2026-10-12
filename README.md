@@ -37,7 +37,7 @@ reference them as `'/images/<file>'`.
 | `snowball` | Slingshot snowballs at the house    | `level` (1–4, 4 is the hardest), `shots`             |
 | `melody`   | Hold & slide to hit the carol's notes | `song` (`jingle-bells`/`silent-night`/`merry-christmas`), `threshold` (default 0.6), `tempo` |
 | `stack`    | Drop swinging presents onto a tower; it must not fall | `height` (presents to stack, default 8), `speed` |
-| `contraption` | Drag belts, trampolines, walls & slides (tap = turn) to guide the present under the tree | `level` (1-3) |
+| `contraption` | Drag belts, trampolines, walls & slides (tap = turn) to guide the present under the tree | `level` (1-5, 5 is hardest) |
 
 Every day also accepts `title`, `doorColor` and `doorImage`. Games accept `intro` and
 `celebration: { text, image }` (shown after winning; falls back to `defaultCelebration`).

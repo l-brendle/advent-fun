@@ -148,8 +148,8 @@ export interface StackDay extends GameBase {
 
 export interface ContraptionDay extends GameBase {
   type: 'contraption';
-  /** Puzzle 1-3 (3 is the hardest). Default: 1 */
-  level?: 1 | 2 | 3;
+  /** Puzzle 1-5 (5 is the hardest). Default: 1 */
+  level?: 1 | 2 | 3 | 4 | 5;
 }
 
 export type GameDay =

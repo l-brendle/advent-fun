@@ -81,7 +81,9 @@ const FIXED_FLOOR: Rect[] = [
   { x: W + 10, y: H / 2, w: 20, h: H * 2 },
 ];
 
-export const LEVELS: Record<1 | 2 | 3, LevelDef> = {
+export type LevelId = 1 | 2 | 3 | 4 | 5;
+
+export const LEVELS: Record<LevelId, LevelDef> = {
   1: {
     start: { x: 50, y: 50 },
     treeX: 300,
@@ -102,6 +104,27 @@ export const LEVELS: Record<1 | 2 | 3, LevelDef> = {
       { x: 120, y: 190, w: 100, h: 12 },
     ],
     items: [item('slide', 250, 400), item('trampoline', 300, 330), item('belt', 80, 300), item('wall', 40, 150)],
+  },
+  4: {
+    start: { x: 310, y: 40 },
+    treeX: 50,
+    fixed: [
+      { x: 250, y: 150, w: 130, h: 12 },
+      { x: 175, y: 330, w: 14, h: 240 },
+      { x: 95, y: 240, w: 110, h: 12 },
+    ],
+    items: [item('slide', 300, 420), item('slide', 60, 400, -1), item('belt', 250, 330), item('trampoline', 100, 430), item('wall', 300, 250)],
+  },
+  5: {
+    start: { x: 40, y: 40 },
+    treeX: 180,
+    fixed: [
+      { x: 125, y: 385, w: 12, h: 130 },
+      { x: 235, y: 385, w: 12, h: 130 },
+      { x: 95, y: 190, w: 100, h: 12 },
+      { x: 270, y: 260, w: 100, h: 12 },
+    ],
+    items: [item('belt', 60, 440), item('belt', 300, 440), item('slide', 200, 120), item('slide', 300, 150, -1), item('trampoline', 60, 330), item('trampoline', 300, 380)],
   },
 };
 
