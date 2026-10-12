@@ -105,26 +105,28 @@ export const LEVELS: Record<LevelId, LevelDef> = {
     ],
     items: [item('slide', 250, 400), item('trampoline', 300, 330), item('belt', 80, 300), item('wall', 40, 150)],
   },
+  // Levels 4+5 are built from decks with a gap at one end: each deck needs its own part to get across,
+  // and the tall block on the first deck can only be cleared with a trampoline hop.
   4: {
-    start: { x: 310, y: 40 },
-    treeX: 50,
+    start: { x: 40, y: 40 },
+    treeX: 265,
     fixed: [
-      { x: 250, y: 150, w: 130, h: 12 },
-      { x: 175, y: 330, w: 14, h: 240 },
-      { x: 95, y: 240, w: 110, h: 12 },
+      { x: 125, y: 130, w: 250, h: 12 },
+      { x: 150, y: 59, w: 14, h: 130 },
+      { x: 235, y: 240, w: 250, h: 12 },
     ],
-    items: [item('slide', 300, 420), item('slide', 60, 400, -1), item('belt', 250, 330), item('trampoline', 100, 430), item('wall', 300, 250)],
+    items: [item('belt', 300, 420), item('belt', 60, 300), item('slide', 280, 330), item('trampoline', 180, 420)],
   },
   5: {
     start: { x: 40, y: 40 },
-    treeX: 180,
+    treeX: 170,
     fixed: [
-      { x: 125, y: 385, w: 12, h: 130 },
-      { x: 235, y: 385, w: 12, h: 130 },
-      { x: 95, y: 190, w: 100, h: 12 },
-      { x: 270, y: 260, w: 100, h: 12 },
+      { x: 125, y: 100, w: 250, h: 12 },
+      { x: 165, y: 44, w: 14, h: 100 },
+      { x: 235, y: 200, w: 250, h: 12 },
+      { x: 125, y: 330, w: 250, h: 12 },
     ],
-    items: [item('belt', 60, 440), item('belt', 300, 440), item('slide', 200, 120), item('slide', 300, 150, -1), item('trampoline', 60, 330), item('trampoline', 300, 380)],
+    items: [item('belt', 300, 420), item('belt', 60, 300), item('slide', 280, 330), item('slide', 90, 420), item('trampoline', 180, 420)],
   },
 };
 

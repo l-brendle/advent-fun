@@ -15,9 +15,9 @@ const SOLUTIONS: Record<LevelId, Item[]> = {
   1: [it_('slide', 70, 150), it_('belt', 230, 444)],
   2: [it_('slide', 243, 153), it_('trampoline', 120, 196), it_('belt', 26, 128)],
   3: [it_('slide', 274, 108, -1), it_('trampoline', 251, 299), it_('belt', 194, 195, -1), it_('wall', 62, 67, 1, false)],
-  // levels 4+5: found by an optimiser; in level 4 every part is needed, in level 5 at least four
-  4: [it_('slide', 115, 428, -1), it_('slide', 37, 319), it_('belt', 238, 113, -1), it_('trampoline', 124, 144), it_('wall', 323, 75)],
-  5: [it_('belt', 65, 282), it_('belt', 89, 49), it_('slide', 313, 181, -1), it_('slide', 215, 149, -1), it_('trampoline', 31, 393), it_('trampoline', 135, 175)],
+  // levels 4+5 (decks with gaps): found by an optimiser; with any single part removed it found no solution at all
+  4: [it_('belt', 247, 208, -1), it_('belt', 78, 287), it_('slide', 41, 79), it_('trampoline', 97, 91)],
+  5: [it_('belt', 301, 403, -1), it_('belt', 24, 50), it_('slide', 101, 268), it_('slide', 248, 170, -1), it_('trampoline', 87, 64)],
 };
 
 describe('contraption', () => {
@@ -32,6 +32,14 @@ describe('contraption', () => {
       expect(simulate(lv, [])).toBe('failed');
     });
   }
+
+  it('levels 4 and 5 need every part of the known solution', () => {
+    for (const lv of [4, 5] as const) {
+      SOLUTIONS[lv].forEach((_, drop) => {
+        expect(simulate(lv, SOLUTIONS[lv].filter((__, j) => j !== drop)), `level ${lv} without part ${drop}`).toBe('failed');
+      });
+    }
+  });
 
   it('tapping flips belts and slides, turns walls', () => {
     expect(flipItem(it_('belt', 0, 0)).dir).toBe(-1);
